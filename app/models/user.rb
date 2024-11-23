@@ -13,8 +13,14 @@ class User < ApplicationRecord
 
   before_create :set_default_role
 
-  validates :name, presence: true
+  # validates :name, presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
   validates :role, inclusion: { in: ROLES }
+
+ def name
+   [ first_name, last_name ].compact.join(" ")
+ end
 
   def set_default_role
     self.role ||= "user"
