@@ -7,7 +7,9 @@ const NewUser = () => {
   const [userData, setUserData] = useState("");
   const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState(''); 
-  const [name, setName] = useState('');   
+  // Add useState for firstName and lastName
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');   
   const [role, setRole] = useState('');  
 
   const registrationUrl = `${API_URL2}/signup`
@@ -19,7 +21,9 @@ const NewUser = () => {
        
       const updatedUserData = {
         user: {
-          name,
+          // Add firstName and lastName to data sent
+          first_name: firstName,
+          last_name: lastName,
           email,
           password,
           role,
@@ -44,7 +48,9 @@ const NewUser = () => {
           // Clear input fields
           setEmail("");
           setPassword("");
-          setName("");
+          // Add firstName and lastName to cleared fields
+          setFirstName("");
+          setLastName("");
           setRole("");
     
           navigate("/admin");
@@ -66,13 +72,23 @@ const NewUser = () => {
   return (
     // Displays form for creating a new user, admin can set role as user or admin
     <form onSubmit={handleSubmit}>
+      {/* Add first name and last name input fields */}
       <div className="mb-3">
-        <label className="form-label">Name</label>
+        <label className="form-label">First Name</label>
         <input 
           type="text" 
           className="form-control" 
-          value={name} 
-          onChange={(e) => setName(e.target.value)} 
+          value={firstName} 
+          onChange={(e) => setFirstName(e.target.value)} 
+        />
+      </div>
+      <div className="mb-3">
+        <label className="form-label">Last Name</label>
+        <input 
+          type="text" 
+          className="form-control" 
+          value={lastName} 
+          onChange={(e) => setLastName(e.target.value)} 
         />
       </div>
       <div className="mb-3">

@@ -59,13 +59,17 @@ const EditModal = ({ record, show, handleClose, handleDelete, recordType }) => {
         api = "donations";
     } else if (recordType === 'contact') {
         updatedFormData.append('contact[user_id]', formData.user_id);
-        updatedFormData.append('contact[name]', formData.name);
+        // added first name and last name
+        updatedFormData.append('contact[first_name]', formData.first_name);
+        updatedFormData.append('contact[last_name]', formData.last_name);
         updatedFormData.append('contact[email]', formData.email);
         updatedFormData.append('contact[phone]', formData.phone);
         updatedFormData.append('contact[message]', formData.message);
         api = "contacts";       
     } else if (recordType === 'user') {
-        updatedFormData.append('user[name]', formData.name);  
+        // added first name and last name
+        updatedFormData.append('user[first_name]', formData.first_name);  
+        updatedFormData.append('user[last_name]', formData.last_name); 
         updatedFormData.append('user[role]', formData.role);
         api = "users";
     }
@@ -161,18 +165,29 @@ if (selectedImage) {
       </Modal.Header>
       <Modal.Body>
         <form>
+          {/* Added first and last name fields */}
         {recordType === 'user' && (
             <>
               <div className="mb-3">
-                <label>Name</label>
+                <label>First Name</label>
                 <input
                   type="text"
                   className="form-control"
-                  name="name"
-                  value={formData.name || ''}
+                  name="firstName"
+                  value={formData.first_name || ''}
                   onChange={onChange}
                 />
               </div>
+              <div className="mb-3">
+                <label>Last Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="lastName"
+                  value={formData.last_name || ''}
+                  onChange={onChange}
+                />
+                </div>
               <div className="mb-3">
                 <label>Role</label>
                 <input 

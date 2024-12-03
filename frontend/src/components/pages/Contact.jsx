@@ -47,6 +47,7 @@ function Contact({ user }) {
                 setErrorMessages(errorData.errors.join(", "));
             } else {
                 // Handle success, clear the form
+                // Added code to clear first and last name
                 console.log(response.json)
                 setName("");
                 setEmail("");
@@ -71,18 +72,18 @@ function Contact({ user }) {
                 </div>
                 <div className={errorMessages ? "text-center text-danger text-bold mb-3" : "d-none"} id="submitErrorMessage">
               {errorMessages && <p>{errorMessages}</p>}
-              </div>
-                
+              </div> 
                 <form id="contactForm" onSubmit={handleSubmit}>
                     <div className="row align-items-stretch mb-5">
                         <div className="col-md-6">
                             <div className="form-group">
-                                <input className="form-control border border-dark" name="name" id="name" type="text"
+                                <input className="form-control border border-dark me-3" name="name" id="name" type="text"
                                 value={name} placeholder="Your Name *" autoComplete="name"
                                 onChange={(e) => setName(e.target.value)} data-sb-validations="required" />
                                 <div className="invalid-feedback" data-sb-feedback="name:required"
                                 >A name is required.</div>
                             </div>
+          
                             <div className="form-group">
                                 <input className="form-control border border-dark" id="email" type="email" 
                                 name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Your Email *" data-sb-validations="required,email" />

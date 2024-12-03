@@ -298,3 +298,13 @@ KitRequest.create([
   { school_year: '2024-2025', kit: discovery_kit },
   { school_year: '2024-2025', kit: empowerment_kit }
 ])
+
+# Seeding first_name and last_name instead of name
+
+50.times do
+  User.create(
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name
+  )
+end
+

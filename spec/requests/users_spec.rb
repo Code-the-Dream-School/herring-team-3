@@ -48,12 +48,14 @@ RSpec.describe "Users", type: :request do
         expect(regular_user.reload.role).to eq("admin")
       end
     end
+    # Added user first and last name
     context "when user role is not admin" do
       it "allows user's own record to be updated" do
         sign_in regular_user
-        patch api_v1_user_path(regular_user), params: { user: { name: "Joe Smith" } }, headers: { 'Authorization': "Bearer #{@auth_token}" }
+        patch api_v1_user_path(regular_user), params: { user: { first_name: "Joe", last_name: "Smith" } }, headers: { 'Authorization': "Bearer #{@auth_token}" }
         expect(response).to have_http_status(:success)
-        expect(regular_user.reload.name).to eq("Joe Smith")
+        expect(regular_user.reload.first_name).to eq("Joe")
+        expect(regular_user.reload.last_name).to eq("Smith")
       end
     end
   end

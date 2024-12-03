@@ -3,8 +3,10 @@ import { API_URL } from "../../constants"
 import { useNavigate } from "react-router-dom"
 
 function Donation({user}) {
+    // Add useState for first name and last name
     const [errorMessages, setErrorMessages] = useState("");
-    const [name, setName] = useState(user ? user.name : "");
+    const [firstName, setFirstName] = useState(user ? user.first_name : "");
+    const [lastName, setLastName] = useState(user ? user.last_name : "");
     const [email, setEmail] = useState(user ? user.email : "");
     const [amount, setAmount] = useState("");
     const [cardNumber, setCardNumber] = useState('');
@@ -22,7 +24,8 @@ function Donation({user}) {
       // Sets name and email to user name and email if user signed in
     useEffect(() => {
         if (user) {
-            setName(user.name);
+            setFirstName(user.first_name);
+            setLastName(user.last_name);
             setEmail(user.email);
         }
     }, [user]);
@@ -35,7 +38,8 @@ function Donation({user}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("Form submitted");
-        console.log("Name: ", name);
+        console.log("First Name: ", firstName);
+        console.log("Last Name: ", lastName);
         console.log("Email: ", email);
         console.log("Submitting donation of:", amount);
         console.log("Card Number:", cardNumber);
@@ -108,7 +112,7 @@ function Donation({user}) {
         <div className="black-strip"></div>
         <section className="page-section" id="register">
         <h2 className="text-center section-heading text-uppercase text-dark" style={{ fontSize: 32, marginTop: 80 }}>Support Our Mission to Make Classrooms More Inclusive</h2>
-        <h3 class="text-center section-subheading" style={{ fontSize: 20 }}>Your donation helps provide free neurodiversity awareness kits to classrooms across the country.</h3>
+        <h3 className="text-center section-subheading" style={{ fontSize: 20 }}>Your donation helps provide free neurodiversity awareness kits to classrooms across the country.</h3>
         <div className="container mb-5 text-centered" style={{ width: 1000}}>
             <p>When you donate to Project Aware, you're helping create inclusive learning environments for students everywhere. Every contribution, big or small, allows us to provide free classroom kits filled with books, lesson plans, and materials that encourage neurodiversity awareness.</p>
 
@@ -132,13 +136,18 @@ function Donation({user}) {
               </div>
 
         <form action="PAYMENT_PROCESSOR_URL" method="POST" id="registerForm" onSubmit={handleSubmit}>
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" class="form-control shadow" id="name" name="name" value={name} required/>
+            <div className="form-group">
+                {/* Added input fields for first name and last name*/}
+                <label htmlFor="firstName">First Name:</label>
+                <input type="text" className="form-control shadow" id="firstName" name="firstName" value={firstName} readOnly/>
             </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" class="form-control shadow" id="email" name="email" value={email} required/>
+            <div className="form-group">
+                <label htmlFor="lastName">Last Name:</label>
+                <input type="text" className="form-control shadow" id="lastName" name="lastName" value={lastName} readOnly/>
+            </div>
+            <div className="form-group">
+                <label htmlFor="email">Email:</label>
+                <input type="email" className="form-control shadow" id="email" name="email" value={email} readOnly/>
             </div>
             
            <div className="form-group">
@@ -249,7 +258,7 @@ function Donation({user}) {
                 </div>
             </div>
             <div className="text-center">
-            <button type="submit" class="btn btn-primary btn-lg text-uppercase mt-4 mb-3 shadow">Donate Now</button>
+            <button type="submit" className="btn btn-primary btn-lg text-uppercase mt-4 mb-3 shadow">Donate Now</button>
             </div>
         </form>
     </div>

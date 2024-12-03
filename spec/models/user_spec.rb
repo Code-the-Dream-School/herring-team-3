@@ -8,7 +8,7 @@ RSpec.describe User, type: :model do
   end
 
   it "is not valid without a name" do
-    regular_user.name = nil
+    regular_user.first_name = nil
     expect(regular_user).to_not be_valid
   end
 
