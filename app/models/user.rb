@@ -19,7 +19,7 @@ class User < ApplicationRecord
   validates :role, inclusion: { in: ROLES }
 
  def name
-   [ first_name, last_name ].compact.join(" ")
+   "#{first_name} #{last_name}"
  end
 
   def set_default_role
