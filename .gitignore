@@ -31,6 +31,9 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+/config/master.key.bak
+/config/credentials.yml.enc.bak
+
 
 # Ignore node modules
 node_modules

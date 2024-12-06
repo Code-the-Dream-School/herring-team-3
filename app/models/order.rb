@@ -1,4 +1,4 @@
-class KitRequest < ApplicationRecord
+class Order < ApplicationRecord
   belongs_to :kit
   belongs_to :user
 

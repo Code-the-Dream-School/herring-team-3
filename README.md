@@ -50,23 +50,13 @@ This app provides teachers with resources to support social-emotional learning f
        npm install
        ```
 
-7. In the project files, delete the `config/credentials.yml.enc` file. Then, in the `rails server` terminal, run the following:
-
-    ```sh
-    EDITOR="code --wait" bin/rails credentials:edit
-    ```
-
-   This will open a file in VSCode. Close this file without changes. This will re-create the credential files for your local environment.
-
-   You should see both the `credentials.yml.enc` and `master.key` files in the `config` folder.
-
-8. In `rails server`, create and seed the database:
+7. In `rails server`, create and seed the database:
 
     ```sh
     rails db:prepare
     ```
 
-9. Start `rails server`
+8. Start `rails server`
 
    ```sh
    rails s
@@ -74,7 +64,7 @@ This app provides teachers with resources to support social-emotional learning f
 
     > The backend server runs on `localhost:3000`
 
-10. Start `frontend`
+9. Start `frontend`
 
     ```sh
     npm run dev
@@ -82,7 +72,7 @@ This app provides teachers with resources to support social-emotional learning f
 
     > The frontend server runs on `localhost:5173`
 
-11. Open `http://localhost:5173/` and get coding!
+10. Open `http://localhost:5173/` and get coding!
 
 ## Features
 

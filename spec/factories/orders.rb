@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :kit_request do
+  factory :order do
     school_year { "2025-2026" }
     phone { "#{rand(100..999)}-#{rand(100..999)}-#{rand(1000..9999)}" }
     school_name { Faker::Educator.unique.secondary_school }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_21_102243) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_24_035858) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -76,7 +76,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_21_102243) do
     t.integer "kit_item_id", null: false
   end
 
-  create_table "kit_requests", force: :cascade do |t|
+  create_table "kits", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "grade_level"
+  end
+
+  create_table "orders", force: :cascade do |t|
     t.string "school_year"
     t.integer "kit_id", null: false
     t.datetime "created_at", null: false
@@ -86,16 +94,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_21_102243) do
     t.string "school_address"
     t.text "comments"
     t.integer "user_id"
-    t.index ["kit_id"], name: "index_kit_requests_on_kit_id"
-    t.index ["user_id"], name: "index_kit_requests_on_user_id"
-  end
-
-  create_table "kits", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "grade_level"
+    t.index ["kit_id"], name: "index_orders_on_kit_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -107,9 +107,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_21_102243) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "jti", null: false
-    t.string "name"
     t.string "role"
-    t.string "first_name", null: false
+    t.string "first_name"
     t.string "last_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true
@@ -120,6 +119,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_21_102243) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "contacts", "users"
   add_foreign_key "donations", "users"
-  add_foreign_key "kit_requests", "kits"
-  add_foreign_key "kit_requests", "users"
+  add_foreign_key "orders", "kits"
+  add_foreign_key "orders", "users"
 end

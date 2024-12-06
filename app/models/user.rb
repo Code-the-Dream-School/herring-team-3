@@ -6,8 +6,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
 
   # Defines available roles and sets default role as user.
-  ROLES = %w[admin user].freeze
-  has_many :kit_requests
+  ROLES = %w[admin user teacher].freeze
+
+  has_many :orders
   has_many :donations, -> { where(canceled: false) }
   has_many :contacts
 
@@ -16,6 +17,10 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :role, inclusion: { in: ROLES }
+
+  def name
+    "#{first_name} #{last_name}"
+  end
 
   def set_default_role
     self.role ||= "user"

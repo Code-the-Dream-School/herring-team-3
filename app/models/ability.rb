@@ -12,14 +12,14 @@ class Ability
       can :destroy, User
       can :manage, KitItem
       can :create, KitItem
-      can :manage, KitRequest
+      can :manage, Order
       can :manage, Donation
     else
       # Allow users to update their own profile
       can :update, User, id: user.id
-      can :read, KitRequest, user_id: user.id # Users can read their own kit requests
-      can :create, KitRequest # Users can create new kit requests
-      can [ :update ], KitRequest, user_id: user.id # Users can update their own kit requests
+      can :read, Order, user_id: user.id # Users can read their own kit requests
+      can :create, Order # Users can create new kit requests
+      can [ :update ], Order, user_id: user.id # Users can update their own kit requests
       can :read, Kit
       can :read, KitItem
       can :create, Donation

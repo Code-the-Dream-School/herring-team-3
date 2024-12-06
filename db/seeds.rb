@@ -11,7 +11,7 @@
 require 'faker'
 
 # Clear tables
-KitRequest.destroy_all
+Order.destroy_all
 KitItem.destroy_all
 Kit.destroy_all
 
@@ -292,9 +292,9 @@ empowerment_kit.kit_items << boy_bat_book << temple_book << see_me_book << vivy_
 perspectives_kit.kit_items << goldfish_boy_book << sevens_book << frankie_book << earth_blue_book << same_book << awesome_guide_book << mockingbird_book << classroom_book << neurotribes_book
 impact_kit.kit_items << curious_dog_book << rosie_book << different_book << classroom_book << neurotribes_book
 
-# Seeding KitRequests
+# Seeding Orders
 
-KitRequest.create([
+Order.create([
   { school_year: '2024-2025', kit: discovery_kit },
   { school_year: '2024-2025', kit: empowerment_kit }
 ])

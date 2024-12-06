@@ -308,8 +308,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :registerable
 
-  jwt_secret = ENV["DEVISE_JWT_SECRET_KEY"] || SecureRandom.hex(20) unless Rails.env.production?
-  jwt_secret ||= Rails.application.credentials.fetch(:secret_key_base)
+  jwt_secret = ENV.fetch("DEVISE_JWT_SECRET_KEY") { "713135daf69a905f3b1e3758ac144401c78a5c66553c845871998f1386c5b48869b043c3e50e45b63acba54daf1005004f9a38b7bdd6d6aa5e11181940b2564d" }
 
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.

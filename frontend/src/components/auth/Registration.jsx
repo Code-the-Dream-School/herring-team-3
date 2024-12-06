@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 export default function Registration() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // Set useState for isTeacher with a default value of false
+
   const [isTeacher, setIsTeacher] = useState(false);
   // Removed useState for name and added for firstName, lastName
   const [firstName, setFirstName] = useState("");
@@ -17,7 +17,9 @@ export default function Registration() {
 
   // Toggles the isTeacher state and logs to console
   const handleClick = () => {
+
     setIsTeacher((prevIsTeacher) => !prevIsTeacher);
+
   };
   // Handles initial signup, sets default role as user since only admin can assign a user as admin. Uses a POST action to sign up new user.
   const handleSubmit = async (event) => {
@@ -34,8 +36,10 @@ export default function Registration() {
         // Removed name, and added firstName and lastName, mapped name details to column names
         first_name: firstName,
         last_name: lastName,
-        },
-      };
+
+      },
+    };
+
 
     setUserData(updatedUserData);
 
@@ -54,12 +58,14 @@ export default function Registration() {
         console.log("Registration successful!");
         setRegistrationMessages("Registration successful!");
 
-       // Clear input fields
-      setEmail("");
-      setPassword("");
-      // Removed name field and added firstName and lastName field
-      setFirstName("");
-      setLastName("");
+
+        // Clear input fields
+        setEmail("");
+        setPassword("");
+        // Removed name field and added firstName and lastName field
+        setFirstName("");
+        setLastName("");
+
 
         navigate("/login");
       } else {
@@ -113,102 +119,109 @@ export default function Registration() {
           >
             {/* Added first and last name fields */}
             <div className="container">
-            <div className="mb-5">
-              <div>
-                <div className="form-group d-flex justify-content-between">
-                  <input
-                    className="form-control shadow me-3"
-                    id="firstName"
-                    type="text"
-                    name="firstName"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="Your First Name *"
-                    data-sb-validations="required"
-                  />
-                 
-                  <input
-                    className="form-control shadow"
-                    id="lastName"
-                    type="text"
-                    name="lastName"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    placeholder="Your Last Name *"
-                    data-sb-validations="required"
-                  />
-                  <div
-                    className="invalid-feedback"
-                    data-sb-feedback="firstName:required"
-                  >
-                    A name is required.
-                  </div>
-                
-                </div>
-                <div className="form-group">
-                  <input
-                    className="form-control shadow"
-                    id="email"
-                    type="email"
-                    name="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your Email *"
-                    data-sb-validations="required,email"
-                  />
-                  <div
-                    className="invalid-feedback"
-                    data-sb-feedback="email:required"
-                  >
-                    An email is required.
-                  </div>
-                  <div className="form-group mb-md-0">
+              <div className="mb-5">
+                <div>
+                  <div className="form-group d-flex justify-content-between">
+                    <input
+                      className="form-control shadow me-3"
+                      id="firstName"
+                      type="text"
+                      name="firstName"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      placeholder="Your First Name *"
+                      data-sb-validations="required"
+                    />
+
                     <input
                       className="form-control shadow"
-                      id="password"
-                      type="password"
-                      name="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Your Password *"
+                      id="lastName"
+                      type="text"
+                      name="lastName"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      placeholder="Your Last Name *"
                       data-sb-validations="required"
                     />
                     <div
                       className="invalid-feedback"
-                      data-sb-feedback="password:required"
+                      data-sb-feedback="firstName:required"
                     >
-                      A password is required.
+                      A name is required.
                     </div>
+                  </div>
 
-                    {/* Added checkbox for teacher role */}
-                    <div className="form-check">
+                  <div className="form-group">
+                    {/* Add space between email and password field */}
+                    <input
+                      className="form-control shadow mb-4"
+                      id="email"
+                      type="email"
+                      name="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Your Email *"
+                      data-sb-validations="required,email"
+                    />
+                    <div
+                      className="invalid-feedback"
+                      data-sb-feedback="email:required"
+                    >
+                      An email is required.
+                    </div>
+                    <div className="form-group mb-md-0">
                       <input
-                        className="form-check-input mt-3 me-3"
-                        type="checkbox"
-                        id="isTeacher"
-                        checked={isTeacher}
-                        onChange={handleClick}
+                        className="form-control shadow"
+                        id="password"
+                        type="password"
+                        name="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Your Password *"
+                        data-sb-validations="required"
                       />
-                      <label className="form-check-label mt-4 text-muted" htmlFor="isTeacher">
-                        <strong>I am a teacher</strong>
-                      </label>
+                      <div
+                        className="invalid-feedback"
+                        data-sb-feedback="password:required"
+                      >
+                        A password is required.
+                      </div>
+                      {/* Added checkbox for teacher role */}
+                      <div className="form-check">
+                        <input
+                          className="form-check-input mt-3 me-3"
+                          type="checkbox"
+                          id="isTeacher"
+                          checked={isTeacher}
+                          onChange={handleClick}
+                        />
+                        <label
+                          className="form-check-label mt-4 text-muted"
+                          htmlFor="isTeacher"
+                        >
+                          <strong>I am a teacher</strong>
+                        </label>
+                      </div>
+
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="text-center">
-              <button
-                className="btn btn-primary btn-lg text-uppercase mb-3 shadow"
-                id="submitButton"
-                type="submit"
-              >
-                Submit
-              </button>
-              <Link to="/login">
-                <p>Already signed up? Login now.</p>
-              </Link>
+
+              <div className="text-center">
+                <button
+                  className="btn btn-primary btn-lg text-uppercase mb-3 shadow"
+                  id="submitButton"
+                  type="submit"
+                >
+                  Submit
+                </button>
+                <Link to="/login">
+                  <p>Already signed up? Login now.</p>
+                </Link>
+              </div>
+
             </div>
           </form>
         </div>
