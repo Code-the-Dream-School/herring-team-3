@@ -3,7 +3,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import SampleChart from "../SampleChart";
 import SampleChartThree from "../SampleChartThree";
 import DashCardSet from "../DashCardSet";
-import { API_URL } from "../../constants";
+import { API_URL, API_URL2,ADMIN_URL } from "../../constants";
 import DataEndpoint from "../DataEndpoint";
 import DashTable from "../DashTable";
 import EditModal from "../EditModal";
@@ -16,6 +16,7 @@ const AdminDashboard = ({ user }) => {
   const donationUrl = `${API_URL}/donations`;
   const contactsUrl = `${API_URL}/contacts`;
   const kitRequestsUrl = `${API_URL}/kit_requests`;
+  const adminUserUrl = `${ADMIN_URL}/users`
   const [cardHeader, setCardHeader] = useState("Data Tables");
   const [record, setRecord] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -31,7 +32,8 @@ const AdminDashboard = ({ user }) => {
     userUrl: [
       { key: "id", label: "User Id" },
       { key: "email", label: "User Email" },
-      { key: "name", label: "User Name" },
+      { key: "first_name", label: "First Name" },
+      { key: "last_name", label: "Last Name"},
       { key: "role", label: "Role" },
       { key: "created_at", label: "Date Created" },
     ],

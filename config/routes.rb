@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     sessions: "users/sessions",
     registrations: "users/registrations"
   }
+  namespace :admin do
+    resources :users, only: [ :update ]
+  end
   # API routes
   namespace :api do
     namespace :v1 do
@@ -18,6 +21,7 @@ Rails.application.routes.draw do
       get "kit_items_only", to: "kit_items#index_kit_items_only"
       post "kit_items_only", to: "kit_items#create_kit_items_only"
       patch "kit_items_only/:id", to: "kit_items#update_kit_items_only"
+      get "profile", to: "users#profile"
       resources :users
       resources :donations
       resources :contacts
