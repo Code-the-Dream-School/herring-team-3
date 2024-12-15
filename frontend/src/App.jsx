@@ -21,6 +21,7 @@ import NewUser from './components/NewUser';
 import AddNew from './components/pages/AddNew';
 import NewKitItem from './components/NewKitItem';
 import AddItemToKit from './components/AddItemToKit';
+import UserProfile from './components/pages/UserProfile';
 
 
 
