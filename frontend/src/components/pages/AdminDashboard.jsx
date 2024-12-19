@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import SampleChart from "../SampleChart";
 import SampleChartThree from "../SampleChartThree";
@@ -7,8 +7,10 @@ import { API_URL, API_URL2,ADMIN_URL } from "../../constants";
 import DataEndpoint from "../DataEndpoint";
 import DashTable from "../DashTable";
 import EditModal from "../EditModal";
+import { AuthContext } from "../auth/AuthContext";
 
-const AdminDashboard = ({ user }) => {
+const AdminDashboard = () => {
+  const { user, setLoggedIn, setUser } = useContext(AuthContext);
   // Necessary api endpoints
   const userUrl = `${API_URL}/users`;
   const kitsUrl = `${API_URL}/kits`;
@@ -209,7 +211,7 @@ const AdminDashboard = ({ user }) => {
   }, [selectedEndpoint]);
   
 
-  if (user.role !== "admin") {
+  if (!user || user.role !== "admin") {
     return (
       <section className="page-section">
         <div>
@@ -218,7 +220,6 @@ const AdminDashboard = ({ user }) => {
       </section>
     );
   }
-  console.log("selectedEndpoint:", selectedEndpoint);
 
   return (
     // Displays cards, graph data, and Data tables
@@ -233,7 +234,7 @@ const AdminDashboard = ({ user }) => {
         >
           
           <a className="navbar-brand text-uppercase text-white">
-          <i class="bi bi-graph-up text-white me-3"></i> Admin Dashboard
+          <i className="bi bi-graph-up text-white me-3"></i> Admin Dashboard
           </a>
           
         </div>
@@ -312,7 +313,7 @@ const AdminDashboard = ({ user }) => {
                             headers={headers.userUrl}
                             apiEndpoint={userUrl}
                             handleShow={(item) => handleShow(item, "user")}
-                          />
+                            />
                         )}
                         {selectedEndpoint === kitsUrl && (
                           <DashTable

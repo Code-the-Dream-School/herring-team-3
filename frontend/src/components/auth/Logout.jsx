@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { API_URL2 } from "../../constants";
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "./AuthContext";
 
-export default function Logout({ setLoggedIn, setUser }) {
+export default function Logout() {
+  const { logout } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
@@ -12,13 +14,10 @@ export default function Logout({ setLoggedIn, setUser }) {
   const handleLogout = async () => {
     const logoutUrl = `${API_URL2}/logout`
     const jwt = localStorage.getItem('jwt');
-    console.log(jwt)
 
     if (!jwt) {
       alert('You are already logged out or your session has expired.');
-      setLoggedIn(false);
-      setUser(null);
-      navigate('/login')
+      logout();
       return;
     }
 
@@ -30,9 +29,7 @@ export default function Logout({ setLoggedIn, setUser }) {
 
       if (decoded.exp < now) {
         alert('Your session has expired. Please log in again.');
-        localStorage.removeItem('jwt');
-        setLoggedIn(false);
-        navigate('/login');
+        logout();
         return;
       }
         const response = await fetch(logoutUrl, {
@@ -45,26 +42,21 @@ export default function Logout({ setLoggedIn, setUser }) {
 
       if (response.ok) {
         alert('Logged out successfully.');
-        localStorage.removeItem('jwt');
-        setLoggedIn(false);
-        setUser(null);
-        navigate("/");
+        logout();
         
         console.log("Logout successful.")
 
       } else {
         const message = response.json();
-        setErrorMessage(message.error.message);
-        console.error(errorMessage);
+        console.error(message.error.message);
+        logout();
         alert("Your session has expired, please sign in again.");
-        setLoggedIn(false);
-        setUser(null);
-        navigate("/login")
 
     }
 
     } catch (error) {
         console.error("An error occurred:", error.message);
+        logout();
         alert(error.message)
     }
     

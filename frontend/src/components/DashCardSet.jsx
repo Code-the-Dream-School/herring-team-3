@@ -29,11 +29,12 @@ const DashCardSet = () => {
         }
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
+        alert("An error occurred.")
       }
     };
 
     fetchDashboardData();
-  }, []);
+  }, [dashUrl]);
 
   return (
     // Displays data using the dashboard card component

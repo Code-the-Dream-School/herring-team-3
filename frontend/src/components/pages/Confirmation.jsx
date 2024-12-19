@@ -1,9 +1,10 @@
-import React, {useEffect} from "react";
-import { API_URL } from "../../constants";
+import React, {useContext, useEffect} from "react";
+import { AuthContext } from "../auth/AuthContext";
 
 
 
-function Confirmation({user}) {
+function Confirmation() {
+    const { user } = useContext(AuthContext);
     // Displays confirmation for kit request success
     const current_user = user?.name || "Guest";
 

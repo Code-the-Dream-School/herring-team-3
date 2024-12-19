@@ -103,6 +103,8 @@ if (recordType === 'user') {
         console.log(`${recordType} updated successfully!`);
         alert(`${recordType} updated successfully!`);
         handleClose(); // Close the modal after success
+    } else {
+      alert("An error occurred with the update.")
     }
     };
 
