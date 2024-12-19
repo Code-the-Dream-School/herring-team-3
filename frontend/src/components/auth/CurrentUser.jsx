@@ -42,6 +42,7 @@ const CurrentUser = ({ setLoggedIn, setUser, user }) => {
             </p>
             {user.role === 'admin' && <Link to="/admin"><i className="fas fa-user-shield"></i>
                 </Link>}
+            {user.role != 'admin' && <Link to="/profile"><i className='fas fa-user'></i></Link>}   
         </div>
     );
 };

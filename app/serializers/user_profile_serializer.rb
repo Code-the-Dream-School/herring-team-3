@@ -1,6 +1,6 @@
 class UserProfileSerializer
   include JSONAPI::Serializer
-  attributes :name, :email
+  attributes :name, :email, :id
 
   attribute :donations do |user|
     user.donations ? user.donations.map { |donation| DonationSerializer.new(donation).serializable_hash } : []
