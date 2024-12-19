@@ -1,3 +1,4 @@
+
 # This file should ensure the existence of records required to run the application in every environment (production,
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
@@ -292,9 +293,19 @@ empowerment_kit.kit_items << boy_bat_book << temple_book << see_me_book << vivy_
 perspectives_kit.kit_items << goldfish_boy_book << sevens_book << frankie_book << earth_blue_book << same_book << awesome_guide_book << mockingbird_book << classroom_book << neurotribes_book
 impact_kit.kit_items << curious_dog_book << rosie_book << different_book << classroom_book << neurotribes_book
 
-# Seeding Orders
+# Seeding Order
+order = Order.create!(
+  school_year: '2024-2025',
+  kit: discovery_kit,
+  phone: "#{Faker::Number.number(digits: 3)}-#{Faker::Number.number(digits: 3)}-#{Faker::Number.number(digits: 4)}",
+  user_id: 1
+)
 
-Order.create([
-  { school_year: '2024-2025', kit: discovery_kit },
-  { school_year: '2024-2025', kit: empowerment_kit }
-])
+# Seeding Address
+Address.create!(
+  street_address: Faker::Address.street_address,
+  city: Faker::Address.city,
+  state: Faker::Address.state_abbr,
+  postal_code: Faker::Address.zip_code,
+  addressable: order
+)
