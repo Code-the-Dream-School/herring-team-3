@@ -30,6 +30,7 @@ export const AuthProvider = ({ children }) => {
                 if (contentType && contentType.includes('application/json')) {
                   const data = await response.json();
                   setUser(data);
+                  console.log("Current user data: ", data)
                   setLoggedIn(true);
                 } else {
                   throw new Error('Invalid response format');

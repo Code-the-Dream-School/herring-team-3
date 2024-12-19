@@ -1,11 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { API_URL } from '../constants';
-import { AuthContext } from './auth/AuthContext';
 
 const NewKitItem = () => {
-  const { logout } = useContext(AuthContext);
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [image, setImage] = useState(null);
@@ -61,7 +59,6 @@ const NewKitItem = () => {
         
         setMessages("An error occurred: " + error.message);
         console.log(error.message);
-        logout();
       }
     };
 

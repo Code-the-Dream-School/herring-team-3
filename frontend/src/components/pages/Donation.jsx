@@ -2,10 +2,10 @@ import React, {useState, useEffect, useContext } from "react"
 import { API_URL } from "../../constants"
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../auth/AuthContext";
-import Logout from "../auth/Logout";
+
 
 function Donation() {
-    const { user, logout } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     // Add useState for first name and last name
     const [errorMessages, setErrorMessages] = useState("");
     const [firstName, setFirstName] = useState(user ? user.first_name : "");
@@ -65,7 +65,7 @@ function Donation() {
         if (!jwt) {
           console.log("No user logged in. Please log in to continue.");
           // Redirect to login
-          logout();
+          navigate("/login")
           alert("Your token has expired. Please login again.")
           return;
       }
@@ -98,7 +98,6 @@ function Donation() {
       // Handle network or other errors
       setErrorMessages("An error occurred: " + error.message);
       console.log(error)
-      logout();
     }
 
         

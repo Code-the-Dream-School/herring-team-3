@@ -9,7 +9,7 @@ import { AuthContext } from "./AuthContext";
 
 export default function Login() {
     // Handles login, setting the data for the user
-    const { setLoggedIn, logout } = useContext(AuthContext);
+    const { setLoggedIn } = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     
@@ -58,14 +58,12 @@ export default function Login() {
           console.log("Login successful!");
           
           setLoggedIn(true);
-          <CurrentUser />
   
           navigate("/")
         } else {
           // Handle registration error
           const errorData = await response.json();
           setLoginMessages('Login failed. Please check your credentials and try again.');
-          logout();
           
 
       // Access the status and message in the JSON response
@@ -76,7 +74,6 @@ export default function Login() {
         // Handle other errors
         console.log("An error occurred:", error)
         setLoginMessages("An error occurred, please try again.");
-        logout();
       }
     };
   

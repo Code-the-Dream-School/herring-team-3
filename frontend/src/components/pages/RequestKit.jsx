@@ -6,7 +6,7 @@ import * as Yup from "yup";
 
 
 function RequestKit() {
-  const { user, logout } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const validationSchema = Yup.object().shape({
     phone: Yup.string().required('Phone is required'),
     schoolAddress: Yup.string().required('School address is required'),
@@ -93,7 +93,6 @@ function RequestKit() {
       } else {
         // Handle network or other errors
         setOrderMessages({general: "Network error: " + error.message});
-        logout();
       }
       console.error(error);
     }

@@ -1,12 +1,12 @@
 import React, { useContext } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import CurrentUser from "./auth/CurrentUser";
-import Logout from "./auth/Logout";
 import { AuthContext } from "./auth/AuthContext";
+import Logout from "./auth/Logout";
 
 // Passed in logged in and user state
 function Navigation() {
-   const { loggedIn, user, logout } = useContext(AuthContext);
+   const { loggedIn, user } = useContext(AuthContext);
    const navigate = useNavigate();
    const handleDonateClick = (e) => {
     e.preventDefault(); 
@@ -15,7 +15,7 @@ function Navigation() {
     if (!user) {
         // If user not logged in, navigate to login page
         alert("You must be logged in to make a donation. Please log in or register if you haven't already.");
-        logout();
+        navigate("/login");
     } else {
         // If user is logged in, navigate to the donation page
         navigate("/donation");
