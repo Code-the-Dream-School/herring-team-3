@@ -1,6 +1,7 @@
 class Kit < ApplicationRecord
   has_and_belongs_to_many :kit_items, join_table: "kit_items_kits"
   has_one_attached :image
+  has_many :orders, as: :product
 
   validates :name, presence: true, uniqueness: true
   validates :description, presence: true, length: { minimum: 10 }

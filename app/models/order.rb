@@ -1,6 +1,7 @@
 class Order < ApplicationRecord
   belongs_to :kit
   belongs_to :user
+  belongs_to :product, polymorphic: true
 
   # Validates that phone number is in the right format
   validates :phone, presence: true, format: { with: /\A\d{3}-\d{3}-\d{4}\z/, message: "must be in the format 'XXX-XXX-XXXX'" }
@@ -12,4 +13,7 @@ class Order < ApplicationRecord
 
   # Ensure each user can only request one kit per school year
   validates :school_year, uniqueness: { scope: :user_id, message: "You can only request one kit per school year" }
+
+  # Validates that the product is present
+  validates :product, presence: true
 end
