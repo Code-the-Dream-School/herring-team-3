@@ -21,6 +21,7 @@ import AddNew from './components/pages/AddNew';
 import NewKitItem from './components/NewKitItem';
 import AddItemToKit from './components/AddItemToKit';
 import { AuthContext } from './components/auth/AuthContext';
+import UserProfile from './components/pages/UserProfile';
 
 
 
@@ -53,6 +54,7 @@ function App() {
               <Route path="add_kit_item" element={<AddNew header="Add New Kit Item"><NewKitItem /></AddNew>} />
               <Route path="add_item_to_kit" element={<AddNew header="Add New Kit Item To Kit"><AddItemToKit /></AddNew>} />
             </Route>
+            <Route path="/profile" element={<UserProfile/>}/>
           </Routes>
         </PageWrapper>
     </div>
