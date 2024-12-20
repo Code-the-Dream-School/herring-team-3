@@ -50,12 +50,6 @@ const NewKit = () => {
           
           console.log("New Kit added successfully!");
           alert("New Kit added successfully!");
-    
-          // Clear input fields
-          setName("");
-          setDescription("");
-          setGradeLevel("");
-          setImage('');
           // Redirect to admin page
           navigate("/admin");
         } else {
