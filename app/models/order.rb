@@ -1,6 +1,7 @@
 class Order < ApplicationRecord
   belongs_to :kit
   belongs_to :user
+  has_one :address, as: :addressable
 
   before_validation :normalize_phone_number
 
