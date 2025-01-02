@@ -5,7 +5,14 @@ FactoryBot.define do
     school_name { Faker::Educator.unique.secondary_school }
     school_address { Faker::Address.street_address + ", " + Faker::Address.city + ", " + Faker::Address.state_abbr + " " + Faker::Address.zip_code }
     comments { "This is wonderful" }
-    association :kit
+    transient do
+      product {nil}
+    end
+    after(:build) do |order, evaluator|
+          order.product = evaluator.product
+    end
+    #association :product, factory: :kit
+    #association :product, factory: :donation
     association :user
   end
 end
