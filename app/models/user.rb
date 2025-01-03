@@ -11,6 +11,7 @@ class User < ApplicationRecord
   has_many :orders
   has_many :donations, -> { where(canceled: false) }
   has_many :contacts
+  has_many :events, foreign_key: :speaker_id, dependent: :nullify
 
   before_create :set_default_role
 

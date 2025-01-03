@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_24_035858) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_28_014803) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -59,9 +59,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_24_035858) do
     t.datetime "updated_at", null: false
     t.string "payment_token"
     t.boolean "canceled", default: false
-    t.string "stripe_checkout_session_id"
-    t.string "stripe_payment_intent_id"
     t.index ["user_id"], name: "index_donations_on_user_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.integer "speaker_id", null: false
+    t.string "title", null: false
+    t.string "description"
+    t.integer "duration", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["speaker_id"], name: "index_events_on_speaker_id"
   end
 
   create_table "kit_items", force: :cascade do |t|
@@ -98,6 +106,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_24_035858) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "recurring_availabilities", force: :cascade do |t|
+    t.date "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -119,6 +133,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_24_035858) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "contacts", "users"
   add_foreign_key "donations", "users"
+  add_foreign_key "events", "users", column: "speaker_id"
   add_foreign_key "orders", "kits"
   add_foreign_key "orders", "users"
 end
