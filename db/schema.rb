@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_28_014803) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_29_054450) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,18 +39,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_014803) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "addresses", force: :cascade do |t|
-    t.string "street_address", null: false
-    t.string "city", null: false
-    t.string "state", null: false
-    t.string "postal_code", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "addressable_type", null: false
-    t.integer "addressable_id", null: false
-    t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable"
-  end
-
   create_table "contacts", force: :cascade do |t|
     t.integer "user_id"
     t.string "name"
@@ -71,6 +59,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_014803) do
     t.datetime "updated_at", null: false
     t.string "payment_token"
     t.boolean "canceled", default: false
+    t.string "stripe_checkout_session_id"
+    t.string "stripe_payment_intent_id"
     t.index ["user_id"], name: "index_donations_on_user_id"
   end
 
@@ -110,11 +100,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_014803) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "phone"
-    t.string "school_name"
-    t.string "school_address"
     t.text "comments"
     t.integer "user_id"
-    t.integer "address_id"
     t.index ["kit_id"], name: "index_orders_on_kit_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
@@ -137,6 +124,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_014803) do
     t.string "role"
     t.string "first_name"
     t.string "last_name"
+    t.text "bio"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -146,7 +134,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_014803) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "contacts", "users"
   add_foreign_key "donations", "users"
-  add_foreign_key "orders", "addresses"
   add_foreign_key "events", "users", column: "speaker_id"
   add_foreign_key "orders", "kits"
   add_foreign_key "orders", "users"
