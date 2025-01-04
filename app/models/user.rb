@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_many :addresses, as: :addressable
   has_many :events, foreign_key: :speaker_id, dependent: :nullify
 
+  belongs_to :organization, optional: true
+
   before_create :set_default_role
 
   validates :first_name, presence: true

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_28_014803) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_03_234408) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -51,6 +51,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_014803) do
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable"
   end
 
+  create_table "bookings", force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.datetime "start_time", null: false
+    t.datetime "end_time", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_bookings_on_event_id"
+  end
+
   create_table "contacts", force: :cascade do |t|
     t.integer "user_id"
     t.string "name"
@@ -71,6 +81,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_014803) do
     t.datetime "updated_at", null: false
     t.string "payment_token"
     t.boolean "canceled", default: false
+    t.string "stripe_checkout_session_id"
+    t.string "stripe_payment_intent_id"
     t.index ["user_id"], name: "index_donations_on_user_id"
   end
 
@@ -110,13 +122,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_014803) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "phone"
-    t.string "school_name"
-    t.string "school_address"
     t.text "comments"
     t.integer "user_id"
     t.integer "address_id"
-    t.index ["kit_id"], name: "index_orders_on_kit_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.string "name"
+    t.integer "org_type", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "recurring_availabilities", force: :cascade do |t|
@@ -144,10 +160,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_28_014803) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bookings", "events"
   add_foreign_key "contacts", "users"
   add_foreign_key "donations", "users"
-  add_foreign_key "orders", "addresses"
   add_foreign_key "events", "users", column: "speaker_id"
+  add_foreign_key "orders", "addresses"
   add_foreign_key "orders", "kits"
   add_foreign_key "orders", "users"
 end
