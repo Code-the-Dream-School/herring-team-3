@@ -63,12 +63,11 @@ erDiagram
 
     ORDERS {
         int id PK
+        int address_id FK
         int kit_id FK
         int user_id FK
         varchar school_year
         varchar phone
-        varchar school_name
-        varchar school_address
         text comments
         datetime created_at
         datetime updated_at

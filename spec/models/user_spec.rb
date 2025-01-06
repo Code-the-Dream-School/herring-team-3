@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  # Create a user with the default role
   let(:regular_user) { create(:user, :regular_user) }
 
   it "is valid with valid attributes" do

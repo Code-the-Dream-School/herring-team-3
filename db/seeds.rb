@@ -1,3 +1,4 @@
+
 # This file should ensure the existence of records required to run the application in every environment (production,
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
@@ -9,12 +10,14 @@
 #   end
 # Initial seeding of my database
 require 'faker'
+require 'factory_bot_rails'
 
 # Clear tables
 Order.destroy_all
 KitItem.destroy_all
 Kit.destroy_all
-
+Address.destroy_all
+User.destroy_all
 
 
 
@@ -285,16 +288,23 @@ classroom_book.image.attach(
   identify: false
 )
 
-
 # Now associating KitItems with Kits
 discovery_kit.kit_items << henry_book << charlie_book << benji_book << no_words_book << wiggles_book << classroom_book << neurotribes_book
 empowerment_kit.kit_items << boy_bat_book << temple_book << see_me_book << vivy_book << someday_book << not_if_book << spark_book << classroom_book << neurotribes_book
 perspectives_kit.kit_items << goldfish_boy_book << sevens_book << frankie_book << earth_blue_book << same_book << awesome_guide_book << mockingbird_book << classroom_book << neurotribes_book
 impact_kit.kit_items << curious_dog_book << rosie_book << different_book << classroom_book << neurotribes_book
 
-# Seeding Orders
+# Seed users
+3.times do
+  FactoryBot.create(:user)
+end
 
-Order.create([
-  { school_year: '2024-2025', kit: discovery_kit },
-  { school_year: '2024-2025', kit: empowerment_kit }
-])
+# Seed addresses
+10.times do
+  FactoryBot.create(:address)
+end
+
+# Seed orders
+3.times do
+  FactoryBot.create(:order)
+end

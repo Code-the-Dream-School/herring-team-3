@@ -66,6 +66,13 @@ RSpec.describe "Users", type: :request do
         expect(regular_user.reload.role).not_to eq("admin")
       end
     end
+
+    it "updates the user's bio" do
+      sign_in regular_user
+      patch api_v1_user_path(regular_user), params: { user: { bio: "This is my bio" } }, headers: { 'Authorization': "Bearer #{@auth_token}" }
+      expect(response).to have_http_status(:success)
+      expect(regular_user.reload.bio).to eq("This is my bio")
+    end
   end
 
   describe "DELETE /destroy" do

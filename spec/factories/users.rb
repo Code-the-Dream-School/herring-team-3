@@ -5,9 +5,14 @@ FactoryBot.define do
     last_name { Faker::Name.unique.last_name }
     email { Faker::Internet.unique.email }
     password { Faker::Internet.password(min_length: 8) }
+    role { "user" } # Default role
 
     trait :admin do
       role { "admin" }
+    end
+
+    trait :speaker_user do
+      role { "speaker" }
     end
 
     trait :regular_user do
