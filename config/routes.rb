@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       resources :users
       resources :donations
       resources :contacts
+      resources :events
       resources :orders, only: [ :index, :create, :show, :update, :destroy ] do
         collection do
           get "current", to: "orders#current"

@@ -15,6 +15,8 @@ class User < ApplicationRecord
   has_many :events, foreign_key: :speaker_id, dependent: :nullify
   has_many :availabilities, foreign_key: :speaker_id, dependent: :destroy
 
+  belongs_to :organization, optional: true
+
   before_create :set_default_role
 
   validates :first_name, presence: true
