@@ -16,12 +16,33 @@ load_and_authorize_resource
 
   # PATCH/PUT api/v1/users/1
   def update
-    if @user.update(user_params)
-      render json: { message: "User updated successfully!" }
-    else
-      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+    if password_update?
+      unless @user.authenticate(params[:old_password])
+        return render json: { error: "Incorrect old password" }, status: :unauthorized
+      end
+
+      if @user.update(user_params)
+        render json: { message: "Password updated successfully!" }, status: :ok
+      else
+        render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+      end
+    else 
+      if @user.update(non_password_user_params)
+        render json: { message: "User updated successfully!" }, status: :ok
+      else
+        render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+      end
     end
   end
+
+  # OLD PATCH/PUT api/v1/users/1
+  # def update
+  #   if @user.update(user_params)
+  #     render json: { message: "User updated successfully!" }
+  #   else
+  #     render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+  #   end
+  # end
 
   # DELETE api/v1/users/:id
   def destroy
@@ -39,9 +60,19 @@ load_and_authorize_resource
 
   def set_user
     @user = User.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "User not found" }, status: :not_found
+  end
+
+  def password_update
+    params[:new_password].present?
   end
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :bio, :profile_image, :organization_id)
+    params.require(:user).permit(:first_name, :last_name, :bio, :profile_image, :organization_id, :password)
+  end
+
+  def non_password_user_params
+    params.permit(:first_name, :last_name, :email, :bio, :profile_image)
   end
 end
