@@ -26,7 +26,7 @@ load_and_authorize_resource
       else
         render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
       end
-    else 
+    else
       if @user.update(non_password_user_params)
         render json: { message: "User updated successfully!" }, status: :ok
       else

@@ -28,10 +28,10 @@ Rails.application.routes.draw do
           get "profile"
         end
       end
-      #Route for the PUT endpoint
+      # Route for the PUT endpoint
       namespace :api do
         namespace :v1 do
-          resources :users, only: [:update]
+          resources :users, only: [ :update ]
         end
       end
       resources :donations
