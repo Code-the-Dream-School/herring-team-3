@@ -28,7 +28,7 @@ load_and_authorize_resource
       end
     else
       if @user.update(non_password_user_params)
-        render json: { message: "User updated successfully!" }, status: :ok
+        render json: { message: "Profile updated successfully!" }, status: :ok
       else
         render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
       end
@@ -64,12 +64,16 @@ load_and_authorize_resource
     render json: { error: "User not found" }, status: :not_found
   end
 
-  def password_update
-    params[:new_password].present?
+  def password_update?
+    params[:password].present?
   end
 
   def user_params
     params.require(:user).permit(:first_name, :last_name, :bio, :profile_image, :organization_id, :password)
+  end
+
+  def non_password_user_params
+    params.permit(:password)
   end
 
   def non_password_user_params

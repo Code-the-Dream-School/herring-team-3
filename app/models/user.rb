@@ -17,6 +17,7 @@ class User < ApplicationRecord
   has_many :bookings, through: :orders
   belongs_to :organization, optional: true
 
+
   # Added profile_image here
   has_one_attached :profile_image
   # Add profile_image_url method for user to facilitate user_profile_serializer
@@ -28,13 +29,9 @@ class User < ApplicationRecord
 
   before_create :set_default_role
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
+  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :first_name, :last_name, presence: true
   validates :role, inclusion: { in: ROLES }
-
-  def name
-    "#{first_name} #{last_name}"
-  end
 
   def set_default_role
     self.role ||= "user"
@@ -54,5 +51,9 @@ class User < ApplicationRecord
 
   def user?
     role == "user"
+  end
+
+  def name
+    "#{first_name} #{last_name}"
   end
 end
