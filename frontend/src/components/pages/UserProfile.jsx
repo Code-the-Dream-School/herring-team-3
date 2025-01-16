@@ -56,6 +56,13 @@ const UserProfile = () => {
         <div className='profile-card'><UserDetails profile={profile} />
       <div>
       <UserActions profile={profile} />
+      
+      </div>
+      {/* Added Edit Profile Button Here */}
+      <div className="mt-3 text-center">
+                <Link to={`/users/${id}/edit`} className="btn btn-primary">
+                  Edit Profile
+                </Link>
       </div>
       </div>
       </div>
