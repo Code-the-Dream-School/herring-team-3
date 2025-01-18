@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { API_URL } from '../../constants';
+import { API_URL2, API_URL } from '../constants';
 import { useNavigate } from 'react-router-dom';
 
 const EditProfileForm = ({ profile, jwt }) => {
