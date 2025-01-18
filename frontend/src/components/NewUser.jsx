@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { API_URL2 } from '../constants';
+import { AuthContext } from './auth/AuthContext';
 
 const NewUser = () => {
+  const { logout } = useContext(AuthContext);
   const [userData, setUserData] = useState("");
   const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState(''); 
@@ -53,7 +55,7 @@ const NewUser = () => {
           setLastName("");
           setRole("");
     
-          navigate("/admin");
+          navigate("/authenticated/admin");
         } else {
           
           const errorData = await response.json();
@@ -65,6 +67,7 @@ const NewUser = () => {
         
         setRegistrationMessages("An error occurred: " + error.message);
         console.log(error.message);
+        logout();
       }
     };
   

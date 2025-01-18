@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { API_URL } from '../../constants';
+import { AuthContext } from '../auth/AuthContext';
 
 
-function Contact({ user }) {
+function Contact() {
+    const { user } = useContext(AuthContext);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -47,11 +49,15 @@ function Contact({ user }) {
                 const errorData = await response.json();
                 setErrorMessages(errorData.errors.join(", "));
             } else {
+                // Handle success
                 alert("Contact submitted successfully!");
-                navigate("/");
+                navigate("/")
             }
         } catch (error) {
             setErrorMessages("An error occurred. Please try again.");
+            setLoggedIn(false);
+            setUser(null);
+            localStorage.removeItem('jwt');
         }
     };
 

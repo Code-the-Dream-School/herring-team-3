@@ -1,10 +1,12 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import CurrentUser from "./auth/CurrentUser";
+import { AuthContext } from "./auth/AuthContext";
 import Logout from "./auth/Logout";
 
 // Passed in logged in and user state
-function Navigation({ loggedIn, setLoggedIn, setUser, user }) {
+function Navigation() {
+   const { loggedIn, user } = useContext(AuthContext);
    const navigate = useNavigate();
    const handleDonateClick = (e) => {
     e.preventDefault(); 
@@ -13,10 +15,10 @@ function Navigation({ loggedIn, setLoggedIn, setUser, user }) {
     if (!user) {
         // If user not logged in, navigate to login page
         alert("You must be logged in to make a donation. Please log in or register if you haven't already.");
-        navigate("/login")
+        navigate("/login");
     } else {
         // If user is logged in, navigate to the donation page
-        navigate("/donation");
+        navigate("/authenticated/donation");
     }
 };
     return (
@@ -32,7 +34,7 @@ function Navigation({ loggedIn, setLoggedIn, setUser, user }) {
                     <ul className="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                         {loggedIn && (
                         <>
-                        <li className="nav-item"><span className="nav-link"><CurrentUser setLoggedIn={setLoggedIn} setUser={setUser} user={user} /></span></li>
+                        <li className="nav-item"><span className="nav-link"><CurrentUser /></span></li>
 
                         </>
                         )}
@@ -48,7 +50,7 @@ function Navigation({ loggedIn, setLoggedIn, setUser, user }) {
                         
                         {loggedIn ? (
                             <>
-                            <li><Logout setLoggedIn={setLoggedIn} setUser={setUser} /></li>
+                            <li><Logout /></li>
                             </>
                         ) : (
                             <>                            

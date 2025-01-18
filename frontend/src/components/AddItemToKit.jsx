@@ -54,7 +54,7 @@ const AddItemToKit = () => {
       if (response.ok) {
         console.log("Kit item successfully added to kit!");
         setMessages('Kit item successfully added to kit!');
-        navigate('/admin');
+        navigate('/authenticated/admin');
       } else {
         console.log("Adding to kit failed:", response.statusText);
         setMessages('Adding to kit failed.');

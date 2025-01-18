@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import SampleChart from "../SampleChart";
 import SampleChartThree from "../SampleChartThree";
@@ -7,8 +7,10 @@ import { API_URL, API_URL2,ADMIN_URL } from "../../constants";
 import DataEndpoint from "../DataEndpoint";
 import DashTable from "../DashTable";
 import EditModal from "../EditModal";
+import { AuthContext } from "../auth/AuthContext";
 
-const AdminDashboard = ({ user }) => {
+const AdminDashboard = () => {
+  const { user, setLoggedIn, setUser } = useContext(AuthContext);
   // Necessary api endpoints
   const userUrl = `${API_URL}/users`;
   const kitsUrl = `${API_URL}/kits`;
@@ -143,6 +145,8 @@ const AdminDashboard = ({ user }) => {
       headers={headers.userUrl}
       apiEndpoint={userUrl}
       handleShow={(item) => handleShow(item, "user")}
+      setLoggedIn={setLoggedIn}
+      setUser={setUser}
     />
   );
   const KitsTable = () => (
@@ -150,6 +154,8 @@ const AdminDashboard = ({ user }) => {
       headers={headers.kitsUrl}
       apiEndpoint={kitsUrl}
       handleShow={(item) => handleShow(item, "kit")}
+      setLoggedIn={setLoggedIn}
+      setUser={setUser}
     />
   );
   const KitItemsTable = () => (
@@ -157,6 +163,8 @@ const AdminDashboard = ({ user }) => {
       header={headers.kitItemsUrl}
       apiEndpoint={kitItemsUrl}
       handleShow={(item) => handleShow(item, "kitItem")}
+      setLoggedIn={setLoggedIn}
+      setUser={setUser}
     />
   );
   const OrdersTable = () => (
@@ -171,6 +179,8 @@ const AdminDashboard = ({ user }) => {
       header={headers.donationUrl}
       apiEndpoint={donationUrl}
       handleShow={(item) => handleShow(item, "donation")}
+      setLoggedIn={setLoggedIn}
+      setUser={setUser}
     />
   );
   const ContactsTable = () => (
@@ -178,6 +188,8 @@ const AdminDashboard = ({ user }) => {
       header={headers.contactsUrl}
       apiEndpoint={contactsUrl}
       handleShow={(item) => handleShow(item, "contact")}
+      setLoggedIn={setLoggedIn}
+      setUser={setUser}
     />
   );
 
@@ -209,7 +221,7 @@ const AdminDashboard = ({ user }) => {
   }, [selectedEndpoint]);
   
 
-  if (user.role !== "admin") {
+  if (!user || user.role !== "admin") {
     return (
       <section className="page-section">
         <div>
@@ -218,7 +230,6 @@ const AdminDashboard = ({ user }) => {
       </section>
     );
   }
-  console.log("selectedEndpoint:", selectedEndpoint);
 
   return (
     // Displays cards, graph data, and Data tables
@@ -233,7 +244,7 @@ const AdminDashboard = ({ user }) => {
         >
           
           <a className="navbar-brand text-uppercase text-white">
-          <i class="bi bi-graph-up text-white me-3"></i> Admin Dashboard
+          <i className="bi bi-graph-up text-white me-3"></i> Admin Dashboard
           </a>
           
         </div>
@@ -280,7 +291,7 @@ const AdminDashboard = ({ user }) => {
       </div>
       <main className="mt-3 pt-3" style={{ zIndex: -500 }}>
         <div className="container-fluid">
-          <DashCardSet />
+          <DashCardSet user={user} setUser={setUser} setLoggedIn={setLoggedIn} />
           <div className="row">
             <div className="col-md-6 mb-3">
               <div className="card">
@@ -312,13 +323,15 @@ const AdminDashboard = ({ user }) => {
                             headers={headers.userUrl}
                             apiEndpoint={userUrl}
                             handleShow={(item) => handleShow(item, "user")}
-                          />
+                            />
                         )}
                         {selectedEndpoint === kitsUrl && (
                           <DashTable
                             headers={headers.kitsUrl}
                             apiEndpoint={kitsUrl}
                             handleShow={(item) => handleShow(item, "kit")}
+                            setLoggedIn={setLoggedIn}
+                            setUser={setUser}
                           />
                         )}
                         {selectedEndpoint === kitItemsUrl && (
@@ -326,6 +339,8 @@ const AdminDashboard = ({ user }) => {
                             headers={headers.kitItemsUrl}
                             apiEndpoint={kitItemsUrl}
                             handleShow={(item) => handleShow(item, "kitItem")}
+                            setLoggedIn={setLoggedIn}
+                            setUser={setUser}
                           />
                         )}
                         {selectedEndpoint === ordersUrl && (
@@ -335,6 +350,8 @@ const AdminDashboard = ({ user }) => {
                             handleShow={(item) =>
                               handleShow(item, "order")
                             }
+                            setLoggedIn={setLoggedIn}
+                            setUser={setUser}
                           />
                         )}
                         {selectedEndpoint === donationUrl && (
@@ -342,6 +359,8 @@ const AdminDashboard = ({ user }) => {
                             headers={headers.donationUrl}
                             apiEndpoint={donationUrl}
                             handleShow={(item) => handleShow(item, "donation")}
+                            setLoggedIn={setLoggedIn}
+                            setUser={setUser}
                           />
                         )}
                         {selectedEndpoint === contactsUrl && (
@@ -349,6 +368,8 @@ const AdminDashboard = ({ user }) => {
                             headers={headers.contactsUrl}
                             apiEndpoint={contactsUrl}
                             handleShow={(item) => handleShow(item, "contact")}
+                            setLoggedIn={setLoggedIn}
+                            setUser={setUser}
                           />
                         )}
                       </>

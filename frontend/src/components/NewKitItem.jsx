@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { API_URL } from '../constants';
+import { AuthContext } from './auth/AuthContext';
 
 const NewKitItem = () => {
-  
+  const { logout } = useContext(AuthContext);
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [image, setImage] = useState(null);
@@ -48,7 +49,7 @@ const NewKitItem = () => {
           setDescription("");
           setImage(null);
               
-          navigate("/admin");
+          navigate("/authenticated/admin");
         } else {
           
           const errorData = await response.json();
@@ -60,6 +61,7 @@ const NewKitItem = () => {
         
         setMessages("An error occurred: " + error.message);
         console.log(error.message);
+        logout();
       }
     };
 

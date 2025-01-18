@@ -103,6 +103,8 @@ if (recordType === 'user') {
         console.log(`${recordType} updated successfully!`);
         alert(`${recordType} updated successfully!`);
         handleClose(); // Close the modal after success
+    } else {
+      alert("An error occurred with the update.")
     }
     };
 
@@ -146,7 +148,7 @@ if (recordType === 'user') {
   
       if (response.ok) {
         alert('Password reset email sent successfully.');
-        navigate("/admin");
+        navigate("/authenticated/admin");
       } else {
         alert('Error sending password reset email.');
       }

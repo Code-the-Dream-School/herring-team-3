@@ -37,20 +37,17 @@ class User < ApplicationRecord
     self.role ||= "user"
   end
 
-  def admin?
-    role == "admin"
+  # Define methods to access bookings through orders and events
+  def pending_bookings
+    Booking.joins(:order).where(orders: { user_id: id }, status: "pending")
   end
 
-  def teacher?
-    role == "teacher"
+  def confirmed_bookings
+    Booking.joins(:order).where(orders: { user_id: id }, status: "confirmed")
   end
 
-  def speaker?
-    role == "speaker"
-  end
-
-  def user?
-    role == "user"
+  def bookings
+    Booking.joins(:order).where(orders: { user_id: id })
   end
 
   def name

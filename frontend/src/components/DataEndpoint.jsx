@@ -20,7 +20,7 @@ const DataEndpoint = ({ userUrl, kitsUrl, kitItemsUrl,  donationUrl, contactsUrl
                 </Link>
               </li>
               <li className="mb-2">
-              <Link  to='/new_forms/add_user' className="nav-link px-5">
+              <Link  to='/authenticated/new_forms/add_user' className="nav-link px-5">
               <span className="me-2"><i className="fas fa-user-plus"></i></span>
               <span>Add New User</span>  
               </Link>
@@ -34,7 +34,7 @@ const DataEndpoint = ({ userUrl, kitsUrl, kitItemsUrl,  donationUrl, contactsUrl
                 </Link>
               </li>
               <li className="mb-2">
-              <Link to='/new_forms/add_kit' className="nav-link px-5">
+              <Link to='/authenticated/new_forms/add_kit' className="nav-link px-5">
                     <span className="me-2"><i className="bi bi-box"></i></span>
                     <span>Add New Kit</span>
                 </Link>
@@ -48,13 +48,13 @@ const DataEndpoint = ({ userUrl, kitsUrl, kitItemsUrl,  donationUrl, contactsUrl
                 </Link>
               </li>
               <li className="mb-2">
-                <Link to="/new_forms/add_kit_item" className="nav-link px-5">
+                <Link to="/authenticated/new_forms/add_kit_item" className="nav-link px-5">
                     <span className="me-2"><i className="fa-solid fa-book-medical"></i></span>
                     <span>Add New Kit Item</span>
                 </Link>
             </li>
               <li className="mb-2">
-                <Link to="/new_forms/add_item_to_kit" className="nav-link px-5">
+                <Link to="/authenticated/new_forms/add_item_to_kit" className="nav-link px-5">
                     <span className="me-2"><i className="fa-solid fa-box-open"></i></span>
                     <span>Add Item to Kit</span>
                 </Link>

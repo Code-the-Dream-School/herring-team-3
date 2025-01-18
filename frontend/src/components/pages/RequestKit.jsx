@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { API_URL } from "../../constants";
 import { useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../auth/AuthContext";
 import * as Yup from "yup";
 import Address from "../Address";
 
 
-function RequestKit({ user, setUser }) {
-
+function RequestKit() {
+  const { user } = useContext(AuthContext);
   const validationSchema = Yup.object().shape({
     phone: Yup.string().required('Phone is required'),
     schoolYear: Yup.string().required('School year is required'),
@@ -102,7 +103,6 @@ function RequestKit({ user, setUser }) {
       },
     };
 
-
     try {
       // Send POST request to registration endpoint
       await validationSchema.validate(orderForm, { abortEarly: false });
@@ -139,7 +139,8 @@ function RequestKit({ user, setUser }) {
         setOrderMessages(newErrors);
       } else {
         // Handle network or other errors
-        setOrderMessages({general: "Network error: " + error});
+        setOrderMessages({general: "Network error: " + error.message});
+        logout();
       }
       console.error(error);
     }

@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URL2 } from "../../constants";
 import { Link } from "react-router-dom";
 import CurrentUser from "./CurrentUser";
+import { AuthContext } from "./AuthContext";
 
 
 
-
-export default function Login({setLoggedIn}) {
+export default function Login() {
     // Handles login, setting the data for the user
+    const { setLoggedIn, logout } = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     
@@ -52,24 +53,17 @@ export default function Login({setLoggedIn}) {
       if (jwt) {
         // Store the JWT in local storage 
         localStorage.setItem('jwt', jwt.split(' ')[1]);
-        console.log(localStorage.getItem('jwt'));
       }
 
           console.log("Login successful!");
           
           setLoggedIn(true);
-          <CurrentUser />
-                                
-        // Clear input fields
-        setEmail("");
-        setPassword("");
-        
   
           navigate("/")
         } else {
           // Handle registration error
           const errorData = await response.json();
-          setLoginMessages(errorData.status.message || "Login failed");
+          setLoginMessages('Login failed. Please check your credentials and try again.');
           
 
       // Access the status and message in the JSON response
@@ -79,7 +73,9 @@ export default function Login({setLoggedIn}) {
      } catch (error) {
         // Handle other errors
         console.log("An error occurred:", error)
-        setLoginMessages(error)
+        setLoginMessages("An error occurred, please try again.");
+        setLoginMessages("An error occurred, please try again.");
+        logout();
       }
     };
   
@@ -169,5 +165,3 @@ export default function Login({setLoggedIn}) {
   
     );
   }
-
-

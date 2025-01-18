@@ -3,7 +3,22 @@ require 'rails_helper'
 RSpec.describe "Users", type: :request do
   let(:admin_user) { create(:user, :admin_user) }
   let(:regular_user) { create(:user, :regular_user) }
-
+  # let(:speaker_user) { create(:user, role: 'speaker', events: [ create(:event) ], availabilities: [ create(:availability) ]) }
+  # let(:teacher) { create(:user, role: 'teacher') }
+  let(:speaker_user) do
+    create(
+      :user,
+      role: 'speaker',
+      events: [ create(:event) ],
+      availabilities: [ create(:availability) ],
+    )
+  end
+  let(:teacher_user) do
+    create(
+      :user,
+      role: 'teacher',
+    )
+  end
 
   describe "GET /index" do
     context "when user role is admin" do
@@ -24,11 +39,11 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-  describe "GET/ show" do
+  describe "GET /show" do
     context "when user role is admin" do
       it "returns http success" do
         sign_in admin_user
-        get api_v1_users_path(admin_user), headers: { 'Authorization': "Bearer #{@auth_token}" }
+        get api_v1_user_path(admin_user), headers: { 'Authorization': "Bearer #{@auth_token}" }
         expect(response).to have_http_status(:success)
       end
     end
@@ -37,7 +52,7 @@ RSpec.describe "Users", type: :request do
       it "returns http response success" do
         # Changed permissions to view speakers
         sign_in regular_user
-        get api_v1_users_path(regular_user), headers: { 'Authorization': "Bearer #{@auth_token}" }
+        get api_v1_user_path(regular_user), headers: { 'Authorization': "Bearer #{@auth_token}" }
         expect(response).to have_http_status(:success)
       end
     end
@@ -96,4 +111,47 @@ RSpec.describe "Users", type: :request do
       end
     end
   end
+
+#  describe "GET /profile" do
+context "when user is a speaker" do
+  it "returns the full speaker profile with all bookings and events" do
+    sign_in speaker_user
+    get profile_api_v1_user_path(speaker_user), headers: { 'Authorization': "Bearer #{@auth_token}" }
+    expect(response).to have_http_status(:success)
+
+    json_response = JSON.parse(response.body)
+    expect(json_response['data']['attributes']).to include(
+      'bio', 'profile_image_url', 'events', 'availabilities', 'pending_bookings', 'confirmed_bookings'
+    )
+  end
+end
+
+context "when user is a teacher" do
+  it "returns a teacher profile with limited information" do
+    sign_in teacher_user
+    get profile_api_v1_user_path(teacher_user), headers: { 'Authorization': "Bearer #{@auth_token}" }
+    expect(response).to have_http_status(:success)
+
+    json_response = JSON.parse(response.body)
+    expect(json_response['data']['attributes']).to include(
+      'bio', 'profile_image_url', 'events', 'availabilities', 'bookings'
+    )
+  end
+end
+
+context "when teacher views a speaker profile" do
+  it "returns the speaker profile with limited information" do
+    sign_in teacher_user
+    get profile_api_v1_user_path(speaker_user), headers: { 'Authorization': "Bearer #{@auth_token}" }
+    expect(response).to have_http_status(:success)
+
+    json_response = JSON.parse(response.body)
+    expect(json_response['data']['attributes']).to include(
+      'bio', 'profile_image_url', 'events', 'availabilities'
+    )
+    expect(json_response['data']['attributes']).not_to include(
+      'pending_bookings', 'confirmed_bookings'
+    )
+  end
+end
 end

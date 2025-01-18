@@ -67,16 +67,7 @@ export default function Registration() {
         // Handle successful registration (e.g., redirect to another page)
         console.log("Registration successful!");
         setRegistrationMessages("Registration successful!");
-
-
-        // Clear input fields
-        setEmail("");
-        setPassword("");
-        // Removed name field and added firstName and lastName field
-        setFirstName("");
-        setLastName("");
-
-
+        
         navigate("/login");
       } else {
         // Handle registration error

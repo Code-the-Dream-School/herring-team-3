@@ -24,7 +24,7 @@ const UserDonations = ({ profile }) => (
         <p>No donations yet.</p>
       )}
         <div className='d-flex flex-column align-items-center mt-5'>
-            <Link to="/donation" className="btn btn-primary btn-small mb-2">Make Donations</Link>
+            <Link to="/authenticated/donation" className="btn btn-primary btn-small mb-2">Make Donations</Link>
         </div>
   </div>
 );

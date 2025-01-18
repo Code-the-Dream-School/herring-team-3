@@ -79,7 +79,7 @@ function RequestSpeaker() {
                           <div className="text-start ms-3 me-3 mt-3">
                           <p className="card-bio"><strong>Bio:</strong> {user.bio ? user.bio : "The user has not provided a bio yet."}</p>
                           </div>
-                          <Link className="btn btn-primary" to={`/profile/${user.id}`}>
+                          <Link className="btn btn-primary" to={`/authenticated/profile/${user.id}`}>
                             See My Profile
                           </Link>
                           </div>

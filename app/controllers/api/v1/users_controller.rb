@@ -50,10 +50,9 @@ load_and_authorize_resource
     render json: { message: "User deleted successfully!" }
   end
 
-  # Add profile action and pass current_user as params
   def profile
-    @user = User.find(params[:id])
-    render json: UserProfileSerializer.new(@user).serializable_hash
+    role = current_user.role
+    render json: UserProfileSerializer.new(@user, { params: { role: role } }).serializable_hash
   end
 
   private
