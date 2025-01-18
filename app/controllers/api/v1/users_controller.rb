@@ -15,34 +15,34 @@ load_and_authorize_resource
   end
 
   # PATCH/PUT api/v1/users/1
-  def update
-    if password_update?
-      unless @user.authenticate(params[:old_password])
-        return render json: { error: "Incorrect old password" }, status: :unauthorized
-      end
-
-      if @user.update(user_params)
-        render json: { message: "Password updated successfully!" }, status: :ok
-      else
-        render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
-      end
-    else
-      if @user.update(non_password_user_params)
-        render json: { message: "Profile updated successfully!" }, status: :ok
-      else
-        render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
-      end
-    end
-  end
-
-  # OLD PATCH/PUT api/v1/users/1
   # def update
-  #   if @user.update(user_params)
-  #     render json: { message: "User updated successfully!" }
+  #   if password_update?
+  #     unless @user.authenticate(params[:old_password])
+  #       return render json: { error: "Incorrect old password" }, status: :unauthorized
+  #     end
+
+  #     if @user.update(user_params)
+  #       render json: { message: "Password updated successfully!" }, status: :ok
+  #     else
+  #       render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+  #     end
   #   else
-  #     render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+  #     if @user.update(non_password_user_params)
+  #       render json: { message: "Profile updated successfully!" }, status: :ok
+  #     else
+  #       render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+  #     end
   #   end
   # end
+
+  # OLD PATCH/PUT api/v1/users/1
+  def update
+    if @user.update(user_params)
+      render json: { message: "User updated successfully!" }
+    else
+      render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
 
   # DELETE api/v1/users/:id
   def destroy
@@ -55,6 +55,23 @@ load_and_authorize_resource
     @user = User.find(params[:id])
     render json: UserProfileSerializer.new(@user).serializable_hash
   end
+
+#   def update_password
+#     user = current_user
+
+#     # Check if the old password is correct
+#     if user.authenticate(params[:old_password])
+#       # Update the password
+#       if user.update(password: params[:new_password])
+#         render json: { message: 'Password updated successfully.' }, status: :ok
+#       else
+#         render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+#       end
+#     else
+#       render json: { error: 'Invalid old password.' }, status: :unauthorized
+#     end
+#   end
+# end
 
   private
 
@@ -72,11 +89,4 @@ load_and_authorize_resource
     params.require(:user).permit(:first_name, :last_name, :bio, :profile_image, :organization_id, :password)
   end
 
-  def non_password_user_params
-    params.permit(:password)
-  end
-
-  def non_password_user_params
-    params.permit(:first_name, :last_name, :email, :bio, :profile_image)
-  end
 end
