@@ -56,23 +56,6 @@ load_and_authorize_resource
     render json: UserProfileSerializer.new(@user).serializable_hash
   end
 
-#   def update_password
-#     user = current_user
-
-#     # Check if the old password is correct
-#     if user.authenticate(params[:old_password])
-#       # Update the password
-#       if user.update(password: params[:new_password])
-#         render json: { message: 'Password updated successfully.' }, status: :ok
-#       else
-#         render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
-#       end
-#     else
-#       render json: { error: 'Invalid old password.' }, status: :unauthorized
-#     end
-#   end
-#end
-
   private
 
   def set_user
