@@ -88,5 +88,4 @@ load_and_authorize_resource
   def user_params
     params.require(:user).permit(:first_name, :last_name, :bio, :profile_image, :organization_id, :password)
   end
-
 end
