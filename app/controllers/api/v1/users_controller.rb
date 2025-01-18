@@ -71,7 +71,7 @@ load_and_authorize_resource
 #       render json: { error: 'Invalid old password.' }, status: :unauthorized
 #     end
 #   end
-# end
+#end
 
   private
 
