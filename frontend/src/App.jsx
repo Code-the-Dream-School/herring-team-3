@@ -22,7 +22,7 @@ import AddNew from './components/pages/AddNew';
 import NewKitItem from './components/NewKitItem';
 import AddItemToKit from './components/AddItemToKit';
 import UserProfile from './components/pages/UserProfile';
-import EditProfileForm from './components/EditProfileForm';
+
 
 
 
@@ -118,7 +118,6 @@ function App() {
               <Route path="add_item_to_kit" element={<AddNew header="Add New Kit Item To Kit"><AddItemToKit /></AddNew>} />
             </Route>
             <Route path="/profile/:id" element={<UserProfile/>}/>
-            <Route path="/users/:id/edit" element={<EditProfileForm />} />
           </Routes>
         </PageWrapper>
       </Router>

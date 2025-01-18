@@ -7,6 +7,7 @@ import UserDonations from '../UserDonations';
 import UserOrders from '../UserOrders';
 import UserBookings from '../UserBookings';
 import default_user_img from "/assets/img/default_user_img.png"
+import EditProfileForm from '../EditProfileForm';
 
 const UserProfile = () => {
   const { id } = useParams();
@@ -56,13 +57,7 @@ const UserProfile = () => {
         <div className='profile-card'><UserDetails profile={profile} />
       <div>
       <UserActions profile={profile} />
-      
-      </div>
-      {/* Added Edit Profile Button Here */}
-      <div className="mt-3 text-center">
-                <Link to={`/users/${id}/edit`} className="btn btn-primary">
-                  Edit Profile
-                </Link>
+      <EditProfileForm porfile={profile} />
       </div>
       </div>
       </div>

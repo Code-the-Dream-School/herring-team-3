@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { API_URL2, API_URL } from '../constants';
+import { API_URL } from '../constants';
 import { useNavigate } from 'react-router-dom';
+import { Button, Modal, Form } from 'react-bootstrap';
 
 const EditProfileForm = ({ profile, jwt }) => {
+  const navigate = useNavigate();
+  const [show, setShow] = useState(false);
   const [formData, setFormData] = useState({
     firstName: profile?.firstName || '',
     lastName: profile?.lastName || '',
@@ -14,7 +17,10 @@ const EditProfileForm = ({ profile, jwt }) => {
   });
 
   const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -26,19 +32,13 @@ const EditProfileForm = ({ profile, jwt }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
 
     const form = new FormData();
-    form.append('firstName', formData.firstName);
-    form.append('lastName', formData.lastName);
-    form.append('email', formData.email);
-    form.append('bio', formData.bio);
-    if (formData.oldPassword && formData.newPassword) {
-      form.append('oldPassword', formData.oldPassword);
-      form.append('newPassword', formData.newPassword);
-    }
-    if (formData.profileImage) {
-      form.append('profileImage', formData.profileImage);
-    }
+    Object.keys(formData).forEach((key) => {
+      if (formData[key]) form.append(key, formData[key]);
+    });
 
     try {
       const response = await fetch(`${API_URL}/users/${profile.id}`, {
@@ -50,85 +50,101 @@ const EditProfileForm = ({ profile, jwt }) => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to update profile');
+        throw new Error('Failed to update profile. Please try again.');
       }
 
-      const updatedProfile = await response.json();
       alert('Profile updated successfully');
       navigate(`/users/${profile.id}/profile`);
+      handleClose();
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Edit Profile</h2>
-      {error && <p className="error">{error}</p>}
+    <div className='d-flex flex-column align-items-center mt-5'>
+      <Button variant="primary" onClick={handleShow}>
+        Edit
+      </Button>
 
-      <label>
-        First Name:
-        <input
-          type="text"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Last Name:
-        <input
-          type="text"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Email:
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Old Password:
-        <input
-          type="password"
-          name="oldPassword"
-          value={formData.oldPassword}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        New Password:
-        <input
-          type="password"
-          name="newPassword"
-          value={formData.newPassword}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        Bio:
-        <textarea
-          name="bio"
-          value={formData.bio}
-          onChange={handleChange}
-        ></textarea>
-      </label>
-      <label>
-        Profile Image:
-        <input type="file" name="profileImage" onChange={handleChange} />
-      </label>
-
-      <button type="submit">Save Changes</button>
-    </form>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Profile</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="formFirstName">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formLastName">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formOldPassword">
+              <Form.Label>Old Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="oldPassword"
+                value={formData.oldPassword}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formNewPassword">
+              <Form.Label>New Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="newPassword"
+                value={formData.newPassword}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formBio">
+              <Form.Label>Bio</Form.Label>
+              <Form.Control
+                as="textarea"
+                name="bio"
+                value={formData.bio}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="formProfileImage">
+              <Form.Label>Profile Image</Form.Label>
+              <Form.Control
+                type="file"
+                name="profileImage"
+                onChange={handleChange}
+              />
+            </Form.Group>
+            {error && <p className="text-danger">{error}</p>}
+            <Button variant="primary" type="submit" disabled={loading}>
+              {loading ? 'Saving...' : 'Save Changes'}
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </div>
   );
 };
 
